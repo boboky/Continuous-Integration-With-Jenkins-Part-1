@@ -1,0 +1,9 @@
+scripts and configs
+==================
+
+
+
+mvn archetype:generate -DgroupId=com.mkyong -DartifactId=CounterWebApp -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+
+tomcatrunning=`netstat -anop | grep LISTEN | grep 8080`
+if ! [[ -z  $tomcatrunning ]] ; then pid=`echo $tomcatrunning | awk  '{print $7}'  | awk -F/ '{ print $1}'`; kill -9 $pid; echo "killed $pid"; fi
