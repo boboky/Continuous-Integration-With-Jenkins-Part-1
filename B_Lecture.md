@@ -1,7 +1,7 @@
 
 ## Day 2
 
-- Install tools for Managing Java App
+- Install tools for Managing Java App ( Manually... without Jenkins)
 
 
 ---
@@ -36,26 +36,73 @@
     mvn -version
 
 
+
+###  Task 2: Compile and Test JavaWeb App 
+
+- Use Maven to "build" the Java code
+- Use Maven to "Test" the Java code
+- Use Maven to package the Java code
+
     
-#### start Jenkins
+#### Use Maven to "build" the Java code
 
-    service jenkins start
-
-
-#### Connect to Jenkins  
-
-    service iptables stop [ensure iptables is stopped. ]
-    ensure access is given on port 8080 in AWS InBound SecurityGroup
-    connect to http://publicip/8080/jenkins
+    cd to /workdir/CounterWebApp 
+    mvn clean install  
 
 
-#### Create an Account in Jenkins
+#### Use Maven to "Test" the Java code  
 
-    First unlock Jenkins...
-    Go to http://publicIp/jenkins
-    cat /var/lib/jenkins/secrets/initialAdminPassword
-    copy the value into 'password' textarea and continue
-    Goto to http://localhost:8080
+    mvn tomcat:run
+    Note:ensure access is given on port 8080 in AWS InBound SecurityGroup, iptables service is stop and  Jenkin process is not running
+    connect to http://publicip/8080/CounterWebApp/mkyong and test accordingly
+
+
+#### Use Maven to package the Java code
+
+    stop running process  with crlt+z
+    mvn package  . This generates a war file. Not the location of the file. This is the "finished" file that will be deployed on the "production" server box.
+
+
+
+###  Task 3: Prepare Produdction Server for Installation
+
+- Install Java and Tomcat on the Server
+- Test that Tomcat works on the Server
+- Get maven version
+
+
+#### Install Java and Tomcat on the Server
+
+    sudo yum update
+    sudo yum install java-1.8.0-openjdk-devel
+    cd /tmp
+    wget http://www.us.apache.org/dist/tomcat/tomcat-8/v8.5.13/bin/apache-tomcat-8.5.13.tar.gz
+    tar xzf apache-tomcat-8.5.13.tar.gz 
+    sudo mkdir -p /usr/local/apache2/tomcat8
+    sudo mv apache-tomcat-8.5.13 /usr/local/apache2/tomcat8
+    cd /usr/local/apache2/tomcat8/apache-tomcat-8.5.13/bin/
+
+
+# wget http://www.us.apache.org/dist/tomcat/tomcat-8/v8.5.0/bin/apache-tomcat-8.5.0.tar.gz
+    
+
+#### Test that Tomcat works on the Server
+
+    sudo ./startup.sh 
+    Note:ensure access is given on port 8080 in AWS InBound SecurityGroup, iptables service is stop and  Jenkin process is not running
+    connect to http://publicip/8080
+
+
+###  Task 4: Now Manually Deploy the JavaWebApp on the 'Production' server 
+
+- Install Java and Tomcat on the Server
+- Test that Tomcat works on the Server
+- Get maven version
+
+
+
+
+
 
 
 
