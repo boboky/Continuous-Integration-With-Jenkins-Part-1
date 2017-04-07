@@ -82,8 +82,6 @@
     sudo mv apache-tomcat-8.5.13 /usr/local/apache2/tomcat8
     cd /usr/local/apache2/tomcat8/apache-tomcat-8.5.13/bin/
 
-
-# wget http://www.us.apache.org/dist/tomcat/tomcat-8/v8.5.0/bin/apache-tomcat-8.5.0.tar.gz
     
 
 #### Test that Tomcat works on the Server
