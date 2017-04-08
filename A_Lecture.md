@@ -105,9 +105,6 @@ Ensure the following is installed and working
 
 
 
-## Continous Integration without Jenkins
-
-
 ### Task 3. Git Install.
 
 - install git on the server and confirm version
