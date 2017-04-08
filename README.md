@@ -4,10 +4,10 @@ You have been tasked as a devops engineer to work with the software development 
 
 You solution should include
 
-1] building and testing the code
-2] use of version control system to manage the code base
-3] process to move code from dev to production
-4] Automate the process if possible
+- 1] building and testing the code
+- 2] use of version control system to manage the code base
+- 3] process to move code from dev to production
+- 4] Automate the process if possible
 
 
 
