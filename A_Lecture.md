@@ -46,7 +46,8 @@ Ensure the following is installed and working
 
 #### Update yum, install Jenkins and Java (OpenJDk 1.8.0)
 
-    sudo yum update
+    sudo yum update -y
+    sudo yum install wget -y
     sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
     sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     sudo yum install jenkins
@@ -55,7 +56,7 @@ Ensure the following is installed and working
 
 #### start Jenkins
 
-    service jenkins start
+    sudo service jenkins start
 
 
 #### Connect to Jenkins  
@@ -71,14 +72,37 @@ Ensure the following is installed and working
     Go to http://publicIp/jenkins
     cat /var/lib/jenkins/secrets/initialAdminPassword
     copy the value into 'password' textarea and continue
-    Goto to http://localhost:8080
+    Goto to http://publicip:8080
 
 
 
 ### Task 2. Working with Jenkins.
 
 - Confirm the version of Jenkins installed
-- Create a user account, call it [admin1]
+- update admin user password
+- Create another user account, call it [admin1]
+- Create a Jenkins Item ( a job) to copy file /tmp/hello to /tmp/deploy directory
+- run the job (check the job console to view the log)
+- run the job for the second time. If the break, fix.
+
+
+#### Create a Jenkins Item ( a job) to copy file /tmp/hello to /tmp/deploy directory
+
+    echo "testing jenkins" >> /tmp/hello.txt
+    Go to Jenkins->NewItem 
+    ["Enter an item name" - HelloWorld] -> [Freestyle Project] -> OK
+    ["Build] -> [Add a build step] -> [Execute shell] 
+    `mkdir /tmp/jenkins`
+    `cp /tmp/hello.txt /tmp/jenkins`
+    ["APPLY] -> [SAVE]
+    ["Build Now]. Now view build console 
+
+
+### Jenkins to do [Try it  yourself]
+- Update Jenkins to update you via email after evey successful execution 
+- Update Jenkins configuration to run over HTTPS
+
+
 
 
 ## Continous Integration without Jenkins
@@ -91,7 +115,7 @@ Ensure the following is installed and working
 
 #### Install git on the server
 
-    sudo yum install git
+    sudo yum install git -y
     get the version of git [ git --version ]
 
 #### configure name and email
@@ -133,6 +157,4 @@ Ensure the following is installed and working
 
 ## Summary
 
-We have looked at Linux basic commands, directory and files manipulation.For more challenging practical over what we have covered today, check here
-
-Here is Linux timeline representation of the distros.. ![https://github.com/shegoj/Linux_Essentials/blob/master/image1.svg](https://github.com/shegoj/Linux_Essentials/blob/master/image1.svg)
+We have looked at how to install and configure Jenkins and Git on a server, create a job item and troubleshoot.
