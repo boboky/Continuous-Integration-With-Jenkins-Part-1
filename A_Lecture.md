@@ -61,9 +61,9 @@ Ensure the following is installed and working
 
 #### Connect to Jenkins  
 
-    service iptables stop [ensure iptables is stopped. ]
+    you might need to ensure iptables is stopped.
     ensure access is given on port 8080 in AWS InBound SecurityGroup
-    connect to http://publicip/8080/jenkins
+    connect to http://publicip:8080/jenkins
 
 
 #### Create an Account in Jenkins
