@@ -134,8 +134,8 @@ Ensure the following is installed and working
 
 #### Download of clone javawebapp from your github space
 
-    create /workapp directory
-    cd to /workapp directory
+    create ~/workapp directory
+    cd to ~/workapp directory
     git clone git@github.com:youraccount/javawebapp.git   [ this will fail, next steps will fix]
 
 #### create ssh private/public key on your Linux Server
