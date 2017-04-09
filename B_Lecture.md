@@ -98,9 +98,9 @@
 - Check if App is running
 
 #### Ensure you are able to copy files from Jenkin server to Prod server
-   From the Jenkins server ping prodserverIp. Ensure this works
-   From the Jenkins server commandline type `ssh prodserver_publicIP`   to connect to Prod without using a password. This will most certainly fail. The next step should fix this.
-   copy the content of ~/.ssh/ia_rsa.pub file on the Jenkins server on into ~/.ssh/authorized_keys on the Prod server. create the file if it doesn't exist. Make a backup of the file before you edit. ~/.ssh/authorized_keys file requires permission '600'
+    From the Jenkins server ping prodserverIp. Ensure this works
+    From the Jenkins server commandline type `ssh prodserver_publicIP`   to connect to Prod without using a password. This will most certainly fail. The next step should fix this.
+    copy the content of ~/.ssh/ia_rsa.pub file on the Jenkins server on into ~/.ssh/authorized_keys on the Prod server. create the file if it doesn't exist. Make a backup of the file before you edit. ~/.ssh/authorized_keys file requires permission '600'
     From the Jenkins server commandline type `ssh prodserver_publicIP`   to connect to Prod without using a password. This should now work.
     From the Jenkins server commandline test if can copy file from the Jenkins server to Prod. create a file (hello.txt) then use `scp hello.txt prodserverip:/tmp` . Confirm if file is successfully copied]
 
