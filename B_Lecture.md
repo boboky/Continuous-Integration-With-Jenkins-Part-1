@@ -106,11 +106,11 @@
 
 
 #### Copy war file from Jenkins to Prod
-   From the Jenkins server copy war file to Prod  
-   scp /home/ec2-user/workdir/javawebapp/CounterWebApp/target/CounterWebApp.war prodserverip:/usr/local/apache2/tomcat8/apache-tomcat-8.5.13/webapps
+    From the Jenkins server copy war file to Prod  
+    scp /home/ec2-user/workdir/javawebapp/CounterWebApp/target/CounterWebApp.war prodserverip:/usr/local/apache2/tomcat8/apache-tomcat-8.5.13/webapps
 
 #### Check if App is running
-   http://publicip:8080/CounterWebApp/mkyong
+    http://publicip:8080/CounterWebApp/mkyong
 
 
 
