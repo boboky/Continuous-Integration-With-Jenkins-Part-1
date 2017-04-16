@@ -164,4 +164,4 @@ Ensure the following is installed and working
 
 ## Summary
 
-We have looked at how to install and configure Jenkins and Git on a server, create a job item and troubleshoot.
+We workshop should provide you the foundation you need to use Jenkins. Try to complete above task. Workshop on Jenkins Pipelining and Docker Integration is next ( not Free :-) )
