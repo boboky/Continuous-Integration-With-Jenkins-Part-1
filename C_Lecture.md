@@ -1,20 +1,7 @@
-#  Continuous integration with Jenkins [ April 2017]
 
-We shall be leveraging Jenkins to automate our delivery pipeline
+## Day 3
 
----
-
-## 
-
-You will try out different excercises using Jenkins to fulfil Continous Integration process
-
----
-
-## Intended Audience
-
-Participants of Day 1 and Day 2 Workshops.
-
----
+- Install tools for Managing Java App ( Manually... without Jenkins)
 
 ## Requirements
 
@@ -160,8 +147,9 @@ Ensure the following is installed and working
 - in your Github javaweb project, update CounterWebApp/src/main/webapp/WEB-INF/pages/index.jsp file, change 'Message' to 'Info' and 'Counter' to 'No:', then run entire redeploymemt pipeline to see your change in prod
 - Our Pipeline does not have Test task.. can you add this?
 - How can you ensure you have a back up of your source code before every deploy?
+- Automatically trigger deploy when code is checked into github master branch
 - Can you include email/text alerts to your builds?
 
 ## Summary
 
-We workshop should provide you the foundation you need to use Jenkins. Try to complete above task. Workshop on Jenkins Pipelining and Docker Integration is next ( not Free :-) )
+We workshop should provide you the foundation you need to use Jenkins. Try to complete above task. Workshop on Jenkins Pipelining and Docker Integration is next ( Jenkins 2 not Free :-) )
