@@ -146,6 +146,7 @@ Ensure the following is installed and working
 
 - in your Github javaweb project, update CounterWebApp/src/main/webapp/WEB-INF/pages/index.jsp file, change 'Message' to 'Info' and 'Counter' to 'No:', then run entire redeploymemt pipeline to see your change in prod
 - Our Pipeline does not have Test task.. can you add this?
+- Can chain the two tasks so the second automatically start after the first is done?
 - How can you ensure you have a back up of your source code before every deploy?
 - Automatically trigger deploy when code is checked into github master branch
 - Can you include email/text alerts to your builds?
