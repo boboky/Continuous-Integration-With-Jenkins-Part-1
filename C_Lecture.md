@@ -26,18 +26,18 @@ Ensure the following is installed and working
 
 ## So far
 
-- Install and Configured required applications
+- Installed and Configured required applications
 - used git to download source code 
-- compiled and build source code with maven
+- compiled and built source code with maven
 - ran test and packaged with maven
 - deployed  war file to production via bash script
-- tested that it works
+- tested
 
 ---
 
 ## Intro
 
-- So far we have used a manual means to compile, build, test and deploy the JavaWeb App. Now we shall be automating  build pipeline via Jenkins to achieve the same objective
+- So far we have manually compiled, built, tested and deployed the JavaWeb App. Now, we shall be automating  build pipeline via Jenkins to achieve the same objective
 
 
 ---
@@ -146,7 +146,7 @@ Ensure the following is installed and working
     Goto Jenkins->New Item->FreeStyleProject 'Deploy to Prod'
     Under 'Build' -> Execute shell
     `scp path_to_CounterWebApp.war prodserverip:/usr/local/apache2/tomcat8/apache-tomcat-8.5.13/webapps`
-    `rm path_to_CounterWebApp.war `
+    `rm -f path_to_CounterWebApp.war `
     Click 'Apply'/'Save' button
 
 #### - Run task and fix to ensure it works
