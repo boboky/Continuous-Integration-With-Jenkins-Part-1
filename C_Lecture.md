@@ -1,6 +1,6 @@
 #  Continuous integration with Jenkins [ April 2017]
 
-This guide provides simple practical steps to learning and using Jenkins. It will take about an hour to complete
+We shall be leveraging Jenkins to automate our delivery pipeline
 
 ---
 
@@ -12,7 +12,7 @@ You will try out different excercises using Jenkins to fulfil Continous Integrat
 
 ## Intended Audience
 
-Users with basic understanding of Linux, Git, Continuous Integration.
+Participants of Day 1 and Day 2 Workshops.
 
 ---
 
@@ -20,137 +20,147 @@ Users with basic understanding of Linux, Git, Continuous Integration.
 
 Ensure the following is installed and working
 
-- putty https://www.dropbox.com/sh/cho8pwn3tlfz37o/AADcF15c1vXwVhu4LE23BkVIa?dl=0 
-- create a Github account [https://github.com/] and ensure you are able to login
-- create 2 AWS EC2 Instances and ensure you are able to connect to each one of them via Putty
+- Ensure your Jenkins is not configured on port 8080
+- Ensure ssh (passwordless) connections still works betweeen the Jenkins server and Prod 
+- ensure git connection from the Jenkins server to Gthub still works
 
-**DO NOT PROCEED UNTIL THESE ARE PRESENT**
+## So far
+
+- Install and Configured required applications
+- used git to download source code 
+- compiled and build source code with maven
+- ran test and packaged with maven
+- deployed  war file to production via bash script
+- tested that it works
 
 ---
 
 ## Intro
 
-- Jenkins is a free source that can handle any kind of build or continuous integration. Jenkins works with a number of technologies mainly through plugins
-- Continuous Integration is a development practice that requires developers to integrate code into a shared repository at regular intervals. This concept was meant to remove the problem of finding later occurrence of issues in the build lifecycle
-- Developers checkin their codes -> Jenkins build job is triggered to compile, build and test -> build output is available Jenkins dashboard.
+- So far we have used a manual means to compile, build, test and deploy the JavaWeb App. Now we shall be automating  build pipeline via Jenkins to achieve the same objective
 
 
 ---
 
-###  Task 1: Prepare your Linux server for Jenkins Install
+###  Task 1: Create a Task to Download Source Code from GitHub
 
-- Connect to AWS Serve 1
-- Update yum, install Jenkins and Java (OpenJDk 1.8.0)
-- start Jenkins 
-- Connect to Jenkins 
+- Install 'GitHub plugin' Jenkins Plugin
+- Configure the plugin
+- Create a new task 'WebApp source Download' 
+- Run task and fix to ensure it works
 
-#### Update yum, install Jenkins and Java (OpenJDk 1.8.0)
+#### Install 'GitHub plugin' Jenkins Plugin
 
-    sudo yum update -y
-    sudo yum install wget -y
-    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-    sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-    sudo yum install jenkins
-    sudo yum install java-1.8.0-openjdk-devel
-
-
-#### start Jenkins
-
-    sudo service jenkins start
+    sudo service jenkins start ## start jenkins and log in
+    Goto Jenkins->Manage Jenkins ->Manage Plugins
+    Goto Avaliable. Select 'GitHub plugin' ( Use can use filter find the plugin)
+    select plugin and click 'Download now and install after restart'. This will kick it off
+    select restart' checkbox to restart Jenkins
 
 
-#### Connect to Jenkins  
+#### Configure the plugin
 
-    you might need to ensure iptables is stopped.
-    ensure access is given on port 8080 in AWS InBound SecurityGroup
-    connect to http://publicip:8080/jenkins
+    Goto Jenkins->Manage Jenkins ->Global Tool Configuration
+    Under GIT section, ensure "Path to Git executable" is 'git' and 'install automatically' is checked
+    Click 'Apply'/'Save' button
+
+#### Create a new task 'WebApp source Download'   
+
+    Goto Jenkins->New Item->FreeStyleProject 'WebApp source Download'
+    Under 'Source Code Management', select Git and  Repository URL pointing to https://github.com/youraccount/javawebapp
+    Click 'Apply'/'Save' button
 
 
-#### Create an Account in Jenkins
+#### - Run task and fix to ensure it works
 
-    First unlock Jenkins...
-    Go to http://publicIp/jenkins
-    cat /var/lib/jenkins/secrets/initialAdminPassword
-    copy the value into 'password' textarea and continue
-    Goto to http://publicip:8080
+    Run the task and ensure it works. Check console to see what is happening behind the scene
 
 
 
-### Task 2. Working with Jenkins.
+### Task 2. Create Task to Build source with Maven.
 
-- Confirm the version of Jenkins installed
-- update admin user password
-- Create another user account, call it [admin1]
-- Create a Jenkins Item ( a job) to copy file /tmp/hello to /tmp/deploy directory
-- run the job (check the job console to view the log)
-- run the job for the second time. If the break, fix.
+- Install 'Maven Integration plugin' Jenkins Plugin
+- Configure the plugin
+- Create a new task 'WebApp build' 
+- Run task and fix to ensure it works
 
+#### Install 'GitHub plugin' Jenkins Plugin
 
-#### Create a Jenkins Item ( a job) to copy file /tmp/hello to /tmp/deploy directory
-
-    echo "testing jenkins" >> /tmp/hello.txt
-    Go to Jenkins->NewItem 
-    ["Enter an item name" - HelloWorld] -> [Freestyle Project] -> OK
-    ["Build] -> [Add a build step] -> [Execute shell] 
-    `mkdir /tmp/jenkins`
-    `cp /tmp/hello.txt /tmp/jenkins`
-    ["APPLY] -> [SAVE]
-    ["Build Now]. Now view build console 
+    sudo service jenkins start ## start jenkins and log in
+    Goto Jenkins->Manage Jenkins ->Manage Plugins
+    Goto Avaliable. Select 'Maven Integration plugin' ( Use can use filter find the plugin) 
+    select plugin and click 'Download now and install after restart'. This will kick it off
+    select restart' checkbox to restart Jenkins
 
 
-### Jenkins to do [Try it  yourself]
-- Update Jenkins to update you via email after evey successful execution 
-- Update Jenkins configuration to run over HTTPS
+#### Configure the plugin
+
+    Goto Jenkins->Manage Jenkins ->Global Tool Configuration
+    Under Maven section, ensure 'install automatically' is checked, click 'Add Installer' Install from Apache Version:3.3.9	
+    Click 'Apply'/'Save' button
 
 
 
+#### Create a new task 'WebApp Build'   
 
-### Task 3. Git Install.
+    Goto Jenkins->New Item->Maven Project 'WebApp Build'
+    Under 'Source Code Management', select Git and  Repository URL pointing to https://github.com/youraccount/javawebapp  CounterWebApp/pom.xml
+    Under 'Build'
+    Root POM' should be  CounterWebApp/pom.xml  , 'Goals and options' should be 'clean' ( without the quote). ## Please understand what we are doing here or ask questions if you don't
+    Click 'Apply'/'Save' button
 
-- install git on the server and confirm version
-- configure name and email
 
-#### Install git on the server
+#### - Run task and fix to ensure it works
 
-    sudo yum install git -y
-    get the version of git [ git --version ]
-
-#### configure name and email
-
-    git config --global user.name "Olu Mike"
-    git config --global user.email "shegoj@yahoo.com"
-
-### Task 3. Fork APP into your Github space.
-
-- Fork JavaWeb-App repo from https://github.com/shegoj/javawebapp  into your github
+    Run the task and ensure it works. Check console to see what is happening behind the scene
+    No change 'Goals and options' to 'clean install', the run task again
 
 
 
-### Task 4. Integrate Git with Github Account.
+### Task 3. Add a Post-build step to the 'WebApp Build' task
 
-- Download or clone javawebapp from your github space unto the Jenkins server
-- create ssh private/public key on your Linux Server
-- copy public key into your github account 
+#### - Add a Post-build step to the 'WebApp Build' task
 
-#### Download of clone javawebapp from your github space
+    Goto Jenkins->'WebApp Build' task
+    Under 'Post Steps'
+    select 'Run only if build succeeds'  
+    select 'Add post-build step'  
+    select 'Invoke Top-level Maven Targets'  
+    'Maven Version' 'maven' 
+    Goal 'package'  
+    'pom' 'CounterWebApp/pom.xml'  ## advanced button
+    Click 'Apply'/'Save' button
 
-    create ~/workapp directory
-    cd to ~/workapp directory
-    git clone git@github.com:youraccount/javawebapp.git   [ this will fail, next steps will fix]
+#### - Run task and fix to ensure it works
 
-#### create ssh private/public key on your Linux Server
-
-    ssh-keygen [ select default values] This will create a private key [ ~/.ssh/id_rsa ] and a public key [ ~/.ssh/id_rsa.pub ]
-
-#### copy public key into your github account 
-
-    go to your github account. got to Settings -> SSH And GPG Keys -> New SSH key
-    Provide a title [Jenkins]  and copy content of ~/.ssh/id_rsa.pub into 'Key'
-    copy content of ~/.ssh/id_rsa.pub into 'Key' [ cat  ~/.ssh/id_rsa.pub]
-    Now run git clone git@github.com:youraccount/javawebapp.git  [ this should now work]
+    Run the task and ensure it works. Check console to see what is happening behind the scene.  Locate where the war file is .
 
 
+### Task 4. Create Task to Deploy to Prod.
 
+- Deploy package file to prod
+- Test that it works
+
+#### - Add a Post-build step to the 'WebApp Build' task
+
+    Goto Jenkins->New Item->FreeStyleProject 'Deploy to Prod'
+    Under 'Build' -> Execute shell
+    `scp path_to_CounterWebApp.war prodserverip:/usr/local/apache2/tomcat8/apache-tomcat-8.5.13/webapps`
+    `rm path_to_CounterWebApp.war `
+    Click 'Apply'/'Save' button
+
+#### - Run task and fix to ensure it works
+
+    Run the task and ensure it works. Check console to see what is happening behind the scene. 
+
+
+
+## Todo
+
+- in your Github javaweb project, update CounterWebApp/src/main/webapp/WEB-INF/pages/index.jsp file, change 'Message' to 'Info' and 'Counter' to 'No:', then run entire redeploymemt pipeline to see your change in prod
+- Our Pipeline does not have Test task.. can you add this?
+- How can you ensure you have a back up of your source code before every deploy?
+- Can you include email/text alerts to your builds?
 
 ## Summary
 
